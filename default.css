@@ -58,8 +58,9 @@ article p:last-child {
 }
 
 article table {
-    border-collapse: collapse;
-    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    border-collapse: collapse
 }
 
 article table td,
@@ -81,12 +82,23 @@ article blockquote {
       margin-top: 10px;
       margin-bottom: 10px;
       margin-left: 50px;
+      margin-right: 50px;
       padding-left: 15px;
       padding-top: 10px;
       padding-right: 10px;
       padding-bottom: 10px;
       border-left: 3px solid #ccc;
       background-color:#f1f1f1
+}
+
+article code{
+      background-color: #474949;
+      color: #D1D9E1;
+      padding-top: 0.05em;
+      padding-bottom: 0.05em;
+      padding-left: 0.4em;
+      padding-right: 0.4em;
+      margin: 0px
 }
 
 footer {
