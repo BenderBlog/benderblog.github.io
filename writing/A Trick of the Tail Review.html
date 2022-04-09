@@ -8,6 +8,8 @@
         document.createElement('article');
         document.createElement('footer');
     </script>
+    <link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js"></script>
     <link rel="stylesheet" href="../default.css">
 </head>
 
@@ -21,6 +23,19 @@
 
     <article>
     <h1>Genesis - A Trick of the Tail 听后感</h1>
+
+    <div id="aplayer01"></div>
+    <script type="text/javascript">
+    const ap = new APlayer({
+        container: document.getElementById('aplayer01'),
+        audio: [{
+            name: 'A Trick of the Tail',
+            artist: 'Genesis',
+            url: 'https://legacy.superbart.xyz/music/Genesis%20-%20A%20Trick%20of%20the%20Tail.ogg',
+            cover: 'https://is3-ssl.mzstatic.com/image/thumb/Music124/v4/d1/d0/6c/d1d06c11-b221-a006-8132-61877d07f02f/source/600x600bb.jpg'
+        }]
+    });
+    </script>
 
     <p>作为前Deep Purple粉丝，现在的Genesis粉丝，如果我要给别人推荐Genesis专辑的话，我会先推荐这张专辑。因为这张专辑的旋律性好，概念性没那么强，听着没有Sell和Lamb那样，又累又难以理解。而且这张专辑的封面也很有意思，很多的人对应着专辑里的歌曲。</p>
 
@@ -97,6 +112,7 @@
     <footer>
     <p>
         Copyright 2021-2022<a href="mailto:superbart_chen@qq.com">SuperBart</a><br>所有文字资料，如果没有注明，按照<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank">CC BY-SA 4.0</a>授权，图片资料按照<a href="https://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank">CC BY 4.0</a>授权<br><a href="https://icp.gov.moe/?keyword=20220626" target="_blank">萌ICP备20220626号</a>
+        <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
     </p>
     </footer>
 
