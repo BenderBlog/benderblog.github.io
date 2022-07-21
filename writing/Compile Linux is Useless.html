@@ -154,7 +154,8 @@
 	</tr>
 </tbody></table></div>
 <p>由上可见，虽然自编译内核相较原版内核，有一定的性能提升，但是提升幅度不大。而我还发现，使用强制性能模式会导致电脑风扇长时间运行，CPU 过热现象明显。而在新内核下运行《黑山起源》，我觉得流畅度有些微提升，至少没有之前那么卡了。但是我高度怀疑这是某种安慰剂效应。<br>
-所以，自行编译内核并没有达到我的需求。但这不意味着我白搞了一通，至少编译内核速度快了。
+所以，自行编译内核并没有达到我的需求。但这不意味着我白搞了一通，至少编译内核速度快了。<br>
+补充说明：我当时玩的是《黑山起源》的 Linux 版本，那个版本被很多的 ProtonDB 用户评为垃圾水平，因为在 AMDGPU 上会有贴图故障，而且不太更新。详情看<a href="https://www.protondb.com/app/362890#igp3SJS5OZ" target="_blank" >这个</a>。
 好了，进入我这篇文章的宝藏部分捏。</p>
 <h2>如何加速内核编译～使用 modprobed-db 精简驱动模块</h2>
 <p><a href="https://github.com/graysky2/modprobed-db" target="_blank" >modprobed-db</a>  是一个 bash 脚本，他能侦测你系统目前所使用的模块，并记录下来。在编译内核的时候，程序只会编译我们使用过的驱动模块，加速编译速度，减少内核体积。</p>
@@ -290,11 +291,11 @@ $ modprobed-db debug # 列出目前运行系统模块和数据库记录的异同
 <a href="https://www.superbart.xyz">返回新版首页</a>
 </article>
 
-<footer>
-<p>
-    Copyright 2021-2022<a href="mailto:superbart_chen@qq.com">SuperBart</a><br>所有文字资料，如果没有注明，按照<a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank">CC BY-SA 4.0</a>授权，图片资料按照<a href="https://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank">CC BY 4.0</a>授权<br><a href="https://icp.gov.moe/?keyword=20220626" target="_blank">萌ICP备20220626号</a>
-</p>
-</footer>
+    <footer>
+    <p>
+        Copyright 2021-2022<a href="mailto:superbart_chen@qq.com">SuperBart</a><a href="https://icp.gov.moe/?keyword=20220626" target="_blank">萌ICP备20220626号</a><br>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a>进行许可。
+    </p>
+    </footer>
 
 </body>
 </html>
