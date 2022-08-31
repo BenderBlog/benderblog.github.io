@@ -1,0 +1,598 @@
+<!doctype html>
+
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>关于如何使用西电一站式服务大厅</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/rainbow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="../default.css">
+    <script>
+        document.createElement('article');
+        document.createElement('footer');
+        hljs.highlightAll();
+    </script>
+    <link rel="stylesheet" href="../default.css">
+</head>
+
+
+<body>
+
+<article>
+<strong>本站点专为老久电脑优化，也是我训练html/css的场地。想看新版网站，<a href="https://www.superbart.xyz">戳这里。</a><br>
+内容基本一样，如有不同，请以新网站为准。</strong><br>请放心，这是我图库所在。
+</article>
+
+<article>
+
+<h1>关于如何使用西电一站式服务大厅</h1>
+<p>好吧，这个假期闲得慌想用 Flutter 把电表重写了(毕竟本人能力很差，就很容易瞎想)。目前开发还是没个身影，但是我感觉，我把核心功能给写出来了，就差套个壳。我觉得，核心功能就是从学校服务器上当下来我需要的数据。根据<a href="https://github.com/BenderBlog/watermeter">我项目的简介</a>，应该是开发完大半了。</p>
+<p>但是呢，鉴于本人的鸽子属性，我感觉我得在我将来大概率弃坑之前，留点材料，以方便将来有比我更无聊，更疯狂的人来完成他心目中的电表。</p>
+
+<h2>关于我校一站式服务大厅</h2>
+<p>我们学校的一站式服务大厅是由南京金智教育开发的，而且很多学校都用这个系统。所以，接下来的部分，感觉很多同志们都能适用。</p>
+<p>我们学校的一站式大厅有很多功能，不过其中仅仅有很少的一部分我们能用。我感觉平常使用最多的就是：</p>
+
+<ul>
+<li>课表</li>
+<li>成绩查询</li>
+<li>考试安排</li>
+</ul>
+<p>而我们平常要使用一站式(或者其他东西，比如健康报告)的话，一般都要先登陆统一认证平台，之后才能进入一站式。而这个统一认证平台，也是金智的:-P</p>
+<h2>提前说明</h2>
+<ol>
+<li>以下使用的语言是 Dart，编写 Flutter 应用的语言。个人觉得还算好理解吧......</li>
+<li>下面步骤，会多次出现本人故意暂停跳转情况发生。因为我发现，要是自动跳转，可能 Cookie 会存不下来，要是 python 的 request 库就没有这个问题。</li>
+</ol>
+
+<h2>如何登陆统一认证平台</h2>
+<h3>工具</h3>
+<p>根据 <a href="https://github.com/xdlinux/xidian-scripts">xidian-script</a> 姐妹计划 <a href="https://github.com/xdlinux/libxduauth">libxduauth</a> 所说，登陆所需要的工具如下：</p>
+<ol>
+<li>Cookie Jar。</li>
+<li>网络传输工具，其中需要设置 "application/x-www-form-urlencoded" 来传输参数。</li>
+<li>网页分析工具，比如大名鼎鼎的 <a href="https://pub.dev/packages/beautiful_soup_dart" target=_blank>BeautifulSoup</a> 库。</li>
+</ol>
+
+<h3>操作步骤</h3>
+<h4>获取登陆网页</h4>
+<p>向 http://ids.xidian.edu.cn/authserver/login 发送 GET 请求，其中请求参数是:
+<pre><code>{
+    &quot;service&quot;: 接下来要访问的网址,
+    &quot;type&quot;: &quot;userNameLogin&quot;
+}
+</code></pre></p>
+<p>如果正常，会返回登录网页。</p>
+<p>将登陆网页交给网页分析工具，让他找到网页中 id 为 pwdFromId 的元素们，这里记为 form：</p>
+<pre><code>/// Import 'package:beautiful_soup_dart/beautiful_soup.dart' before use.
+var page = BeautifulSoup(response);
+var form = page.find(&quot;form&quot;,attrs: {&quot;id&quot;: &quot;pwdFromId&quot;});
+</code></pre>
+<h4>检查是否需要验证码</h4>
+<p>向 http://ids.xidian.edu.cn/authserver/checkNeedCaptcha.htl 发送 GET 请求，请求参数是</p>
+<pre><code class="language-json">{
+    &quot;username&quot;: 填入你的学号,
+    &quot;_&quot;:目前时间戳
+}
+</code></pre>
+<p>查看返回值中有没有 true。</p>
+<p>如果需要填入验证码的话，向 http://ids.xidian.edu.cn/authserver/getCaptcha.htl 获取验证码图片，请求参数是</p>
+<pre><code class="language-json">{ 目前时间戳: &quot;&quot; }
+</code></pre>
+<h4>加密密码</h4>
+<p>首先，我们需要填充密码。这里我们使用 PKCS7 填充方式。我的程序自己实现了，因为没看明白 Dart 里面 PKCS7 咋用的:-(：</p>
+<ul>
+<li>由于加密方式是 AES，要求分组长度是 128 bytes，根据 1 bit = 8 bytes，需要字符串长度是 16 的倍数。</li>
+<li>先在密码字符串前面插上 xidianscriptsxdu 四遍(正好是 16 长的字符串，Dart 默认给的是随机字符串)，然后将字符串转换成 int 数组(也就是把每个字符转换成对应的 ASCII 码)。</li>
+<li>然后计算我们还需要在后面插入多少元素来满足 16 的倍数，差几个在后面插入几个。插入内容为插入元素的个数。注意，要是一个都不差，也得插入数据，来保证数据和插入值都存在。</li>
+<li>由于接下来加密需要的是数字数组，所以不变回字符串。</li>
+</ul>
+<p>然后，从 form 里面寻找 input 标签，且 id 为 pwdEncryptSalt 的元素，这里面是加密密码的密钥(还是盐啥的)。最后，使用 AES-CBC 算法加密，然后返回字符串。</p>
+<p>上述步骤的具体代码如下：</p>
+<pre><code>/// Get base64 encoded data. Which is aes encrypted [toEnc] encoded string using [key].
+/// Padding part is copied from libxduauth&quot;s idea.
+/// Import &quot;package:encrypt/encrypt.dart&quot; before use.
+String aesEncrypt(String toEnc, String key) {
+  dynamic k = Key.fromUtf8(key);
+  var crypt = AES(k, mode: AESMode.cbc, padding: null);
+  /// Start padding
+  int blockSize = 16;
+  List&lt;int&gt; dataToPad = [];
+  dataToPad.addAll(utf8.encode(&quot;xidianscriptsxduxidianscriptsxduxidianscriptsxduxidianscriptsxdu$toEnc&quot;));
+  int paddingLength = blockSize - dataToPad.length % blockSize;
+  for (var i = 0; i &lt; paddingLength; ++i) {
+    dataToPad.add(paddingLength);
+  }
+  String readyToEnc = utf8.decode(dataToPad);
+  /// Start encrypt.
+  return Encrypter(crypt)
+      .encrypt(readyToEnc, iv: IV.fromUtf8(&quot;xidianscriptsxdu&quot;))
+      .base64;
+}
+</code></pre>
+<h4>发送登陆报文</h4>
+<p>首先，构建登陆请求所需要的头。初步需要三个信息：</p>
+<ul>
+<li>username：你的学号</li>
+<li>password：加密过的密码</li>
+<li>rememberMe：防止之后又走一遍登陆过程</li>
+</ul>
+<p>在此之后，我们需要寻找很多预配置的头，加入到我们的头中。这些元素都在 form 中，是 input 标签 ，参数是 "type=hidden" 。循环将其插入到请求头中。</p>
+<p>最后，向 http://ids.xidian.edu.cn/authserver/login 发送 POST 请求，其中请求头是上面搞过的请求头，请求参数如下，注意请求不要自动跳转:</p><pre><code>{&quot;service&quot;: 接下来要访问的网址}</code></pre> </p>
+<p>如果正常，ids.xidian.edu.cn 下面的 Cookie 会多一个 "happyVoyagePersonal=...; Path=/personalinfo"。然后需要我们自己向需要跳转的新网址发 GET 请求，同样，不需要自动跳转。</p>
+<p>到此，通过统一认证平台，我们登陆了一站式服务大厅。</p>
+<h2>使用一站式服务大厅</h2>
+<p>首先给个表格：</p>
+<table>
+<thead>
+<tr>
+<th>应用名称</th>
+<th>内部序号(appID)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>课表</td>
+<td>4770397878132218</td>
+</tr>
+<tr>
+<td>成绩</td>
+<td>4768574631264620</td>
+</tr>
+<tr>
+<td>考试安排</td>
+<td>4768687067472349</td>
+</tr>
+<tr>
+<td>个人信息</td>
+<td>4585275700341858</td>
+</tr>
+</tbody>
+</table>
+<h3>如何进入应用</h3>
+<ol>
+<li>验证是否登录。向 http://ehall.xidian.edu.cn/jsonp/userFavoriteApps.json 发送 GET 请求，查看返回的数据中，hasLogin 是否为 true。如果没登录，则需要登录。登陆需要的 target 是 http://ehall.xidian.edu.cn/login?service=http://ehall.xidian.edu.cn/new/index.html。
+一站式登录成功的话，ehall.xidian.edu.cn 下面的 Cookie 会多一个 "MOD_AUTH_CAS=MOD_AUTH_ST-...; path=/;"。</li>
+<li>请求访问应用。向 http://ehall.xidian.edu.cn/appShow 发送 GET 请求，其中请求参数是:
+<pre><code class="language-json">{&quot;appId&quot;: 要访问应用的内部序号}</code></pre>header 追加参数如下：
+
+<pre><code class="language-json">{&quot;Accept&quot;: &quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8&quot;,}
+</code></pre></li></ol>
+<ol start="3">
+<li>暂停自动跳转请求，截断下来要跳转的网址，去相应函数请求，如果那个功能必要的话。</li>
+</ol>
+<h3>提前说明第二发</h3>
+<p>发送信息中如包含学期信息之情况，按照如此处理：</p>
+<blockquote>
+2022-2023-1 == 2022-2023 学年第一学期
+</blockquote>
+<p>虽然是可以通过请求得到学期数据，不过有的地方，我打算自己算。所以如有对应需求，请查看 xidian-script 代码。</p>
+<h3>获取成绩(学校想让你看到的)</h3>
+<p>一会再告诉大家为啥是&quot;学校想让你看到的&quot;。先给大家介绍原理。</p>
+<h4>获取数据</h4>
+<p>在获取数据前，还记得那个要跳转的网址吗？你一定要给那个网址发个 GET 请求，要不然，接下来的步骤报错 403 未授权。</p>
+<p>实际上这玩意本质上，就是向 http://ehall.xidian.edu.cn/jwapp/sys/cjcx/modules/cjcx/xscjcx.do 发送 POST 请求。不过发送的请求数据，要看情况。</p>
+<p>首先说的是一个共有的请求数据，如下：</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;SFYX&quot;, //是否有效
+  &quot;value&quot;: &quot;1&quot;,
+  &quot;linkOpt&quot;: &quot;and&quot;,
+  &quot;builder&quot;: &quot;m_value_equal&quot;
+}
+</code></pre>
+<p>然后，如果你想查看某个学期的数据，还需要追加以下请求数据：</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;XNXQDM&quot;, //学年学期代码
+  &quot;value&quot;: &quot;2022-2023-1&quot;,//学期学年代码，参考提前说明第二发
+  &quot;linkOpt&quot;: &quot;and&quot;,
+  &quot;builder&quot;: &quot;equal&quot;
+}
+</code></pre>
+<p>然后，由于是 POST，所以没有请求数据设置(有错请指正)。所以我们附在 POST 报文的数据是：</p>
+<pre><code class="language-json">data: {
+  &quot;*json&quot;: 1,
+  &quot;querySetting&quot;: 将上面设置的请求数据编码为 json 字符串,
+  &quot;*order&quot;: &quot;+XNXQDM,KCH,KXH&quot;,
+  &quot;pageSize&quot;:1000,
+  &quot;pageNumber&quot;: 1,
+},
+</code></pre>
+<p>然后返回的数据，基本上是坑爹的汉语拼音缩写，感觉大家应该会破译吧。毕竟人均黑虎阿福，都是会乌鸦坐飞机的。</p>
+<h4>关于那些坑爹的拼音缩写</h4>
+<p>我打开过网页的开发者模式，看到网络菜单有个请求，是向 https://ehall.xidian.edu.cn/jwapp/sys/cjcx/modules/cjcx.do 的 POST 请求。发送的也和上面的头差不多。然后他返回的信息，就是那些坑爹缩写的完整含义。实际上有好多，这里我只列出和查成绩相关的东西。</p>
+<table>
+<thead>
+<tr>
+<th>缩写</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>XNXQDM</td>
+<td>学年学期(代码)</td>
+</tr>
+<tr>
+<td>KCM</td>
+<td>课程名</td>
+</tr>
+<tr>
+<td>KCH</td>
+<td>课程号</td>
+</tr>
+<tr>
+<td>XSKCM</td>
+<td>(学生)课程名</td>
+</tr>
+<tr>
+<td>XSKCH</td>
+<td>(学生)课程号</td>
+</tr>
+<tr>
+<td>ZCJ</td>
+<td>总成绩</td>
+</tr>
+<tr>
+<td>KCLBDM</td>
+<td>课程类别</td>
+</tr>
+<tr>
+<td>KCXZDM</td>
+<td>课程性质</td>
+</tr>
+<tr>
+<td>XGXKLBDM</td>
+<td>校公选课类别</td>
+</tr>
+<tr>
+<td>XF</td>
+<td>学分</td>
+</tr>
+<tr>
+<td>XS</td>
+<td>学时</td>
+</tr>
+<tr>
+<td>XDFSDM</td>
+<td>修读方式</td>
+</tr>
+<tr>
+<td>SFZX</td>
+<td>修读类型</td>
+</tr>
+<tr>
+<td>XFJD</td>
+<td>绩点</td>
+</tr>
+<tr>
+<td>JDF</td>
+<td>积点分(绩点分)</td>
+</tr>
+<tr>
+<td>JXBID</td>
+<td>教学班id</td>
+</tr>
+<tr>
+<td>CXCKDM</td>
+<td>重修重考</td>
+</tr>
+<tr>
+<td>SFJG</td>
+<td>是否及格</td>
+</tr>
+<tr>
+<td>SFYX</td>
+<td>是否有效</td>
+</tr>
+</tbody>
+</table>
+<h4>为啥是&quot;学校想让你看到的&quot;</h4>
+<p>我发现，正常情况下，只有大一新生才能看到自己成绩的排名和具体组成。我查看了页面的源代码，在 ehall.xidian.edu.cn/jwapp/cjcx/*default/modules/cjcx/dqxq/dqxq.js 文件中，有以下几行：</p>
+<pre><code class="language-js">/// The tenth line.
+var isDyxs = false;//是否为大一学生（默认为否）西电大一学生可以查看成绩详情
+/// The thirty-eighth line and below.
+checkIsDyxs : function(){
+    isDyxs = false;
+    var dqxnxqdm = '';//2017-2018-1
+        var xznj = '';//2017
+        if(&quot;90001&quot; == jwlcgl.getRZLB(roleId)){
+            var url = WIS_EMAP_SERV.getAbsPath('/modules/cjcx/cxxsjbxx.do');
+            var res = BH_UTILS.doSyncAjax(url, null);
+            if(res.code=='0' &amp;&amp; res.datas.cxxsjbxx.extParams.code=='1'){
+                var xznj = res.datas.cxxsjbxx.extParams.msg;
+                if(&quot;1&quot; == xznj){
+                    isDyxs = true;
+                }	
+            } else {
+                $.bhTip({content: '学生现在年级查询失败，请稍后再试...', state: 'danger'});
+                return false;
+            }
+        }
+    },
+</code></pre>
+<p>要想看倒也容易，在网页下载完这个文件但还没加载之前，改掉这俩地方。具体各位可以上网搜&quot;如何在 Chrome 中修改网页代码&quot;。或者使用 Charles 或者 mitproxy 搞中间人拦截，手动改包。</p>
+<p>另外说明，这个文件感觉是包含了所有跟查成绩相关的代码，要想深入了解的话可以看看。我对这玩意居然没有加密混淆表示无法理解。</p>
+<p>最后我想问的是，这是什么高年级歧视。如果是要”保护“老师的话，不如想想为啥我们学生会对某些老师敬而远之。</p>
+<h3>获取课表数据</h3>
+<p>一般来说，获取到的数据是需要处理的。xidian-script 是处理成 iCalender 文件，一个国际上用来处理日历和备忘录的标准格式。我的程序计划是利用 Dart 的一个库，保存成 iCalender 。然后我在网上找到个课表的实现，试着套一下。</p>
+<h4>当前学期信息</h4>
+<p>没错，这回我不打算自己合成了:-P</p>
+<p>给 http://ehall.xidian.edu.cn/jwapp/sys/wdkb/modules/jshkcb/dqxnxq.do 发送 POST 请求。如果成功的话，在回复数据中的 ['datas']['dqxnxq']['rows'][0]['DM'] 中，就会包含这个学期的数据，格式见上文的提前说明。</p>
+<p>感觉其他类似的应用应该有类似的方式来获取目前的学期，或者是所有的学期号码。</p>
+<h4>获取开学日期</h4>
+<p>给 http://ehall.xidian.edu.cn/jwapp/sys/wdkb/modules/jshkcb/cxjcs.do 发送 POST 请求，发送的数据如下：</p>
+<pre><code class="language-json">{
+    &quot;XN&quot;: '学期代码的第一个数字-学期代码的第二个数字', //学年
+    &quot;XQ&quot;: 学期代码的最后一个数字, // 学期
+},
+</code></pre>
+<p>获取的日期字符串在返回数据的 ['datas']['cxjcs']['rows'][0][&quot;XQKSRQ&quot;] 中。</p>
+<p>这个东西感觉是为了在显示课表对应日期的时候，找个基准。</p>
+<h4>获取课表初步数据</h4>
+<p>给 http://ehall.xidian.edu.cn/jwapp/sys/wdkb/modules/xskcb/xskcb.do 发送 POST 请求，发送数据如下：</p>
+<pre><code class="language-json">{&quot;XNXQDM&quot;: 当前学期信息字符串}
+</code></pre>
+<p>然后从 ['datas']['xskcb'] 提取信息。</p>
+<p>查看 ['extParams']['code'] 是否为 1。如果是的话，从 ['rows'] 提取数据，否则，从 ['extParams']['msg'] 查看错误信息。</p>
+<h4>没在课表上的课</h4>
+<p>要是有门课没有在课表上，我们咋办？</p>
+<p>给 https://ehall.xidian.edu.cn/jwapp/sys/wdkb/modules/xskcb/cxxsllsywpk.do 发送 POST 请求，发送数据为：</p>
+<pre><code class="language-json">{&quot;XNXQDM&quot;: 当前学期信息字符串}
+</code></pre>
+<p>然后从 ['datas']['cxxsllsywpk'] 提取信息，剩下步骤与上面一致。</p>
+<h4>金智黑话翻译表</h4>
+<p>以下多数自己破译，有误请指正。</p>
+<table>
+<thead>
+<tr>
+<th>缩写</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KCM</td>
+<td>课程名</td>
+</tr>
+<tr>
+<td>KCH</td>
+<td>课程号</td>
+</tr>
+<tr>
+<td>KXH</td>
+<td>教学班序号(课序号)</td>
+</tr>
+<tr>
+<td>KCLBDM</td>
+<td>课程类别</td>
+</tr>
+<tr>
+<td>KCXZDM</td>
+<td>课程性质</td>
+</tr>
+<tr>
+<td>XGXKLBDM</td>
+<td>校公选课类别</td>
+</tr>
+<tr>
+<td>BJDM</td>
+<td>班级</td>
+</tr>
+<tr>
+<td>JASDM</td>
+<td>上课教室</td>
+</tr>
+<tr>
+<td>JXLDM</td>
+<td>教学楼</td>
+</tr>
+<tr>
+<td>JXBDM</td>
+<td>教学班序号</td>
+</tr>
+<tr>
+<td>KKDWDM</td>
+<td>开课单位</td>
+</tr>
+<tr>
+<td>SKJS</td>
+<td>授课教师</td>
+</tr>
+<tr>
+<td>SKXQ</td>
+<td>上课星期</td>
+</tr>
+<tr>
+<td>XXXQDM</td>
+<td>校区</td>
+</tr>
+<tr>
+<td>SKZC</td>
+<td>上课周次(是数字数组，对应周的元素代表是否有课)</td>
+</tr>
+<tr>
+<td>ZCMC</td>
+<td>上课周次(字符串)</td>
+</tr>
+<tr>
+<td>KSJC</td>
+<td>开始教程</td>
+</tr>
+<tr>
+<td>JSJC</td>
+<td>结束教程</td>
+</tr>
+</tbody>
+</table>
+<h3>获取考试安排</h3>
+<p>先说明一下，这块由于没有基本材料，我目前也没有考试，所以以下逻辑仅供参考。</p>
+<h4>关于获取学期数据</h4>
+<p>我经历了那次坑爹的年初疫情，后面我们考试的时候，我们需要自己去一站式更改学期，才能看到我们拖延考试的信息。所以，这里我想做一个查看往学期考试信息的功能。</p>
+<p>然后，当我获取所有学期代码的时候，我发现好家伙，数据居然是从 2012 年开始算的。兄弟，我 2020 年入学的好吗？</p>
+<p>所以，我感觉每年的二月到七月算春季学期，剩下的是秋季学期，我决定自己获取学期代码。</p>
+<pre><code>int now = DateTime.now().month;
+String semester = &quot;&quot;;
+if (now == 1) {
+    semester = &quot;${DateTime.now().year-1}-${DateTime.now().year}-1&quot;;
+} else if (now &gt;= 2 &amp;&amp; now &lt;= 7) {
+    semester = &quot;${DateTime.now().year-1}-${DateTime.now().year}-2&quot;;
+} else {
+    semester = &quot;${DateTime.now().year}-${DateTime.now().year+1}-1&quot;;
+}
+</code></pre>
+<h4>查询考试安排信息</h4>
+<p>实际上我找到了三个相关请求，分别是：</p>
+<table>
+<thead>
+<tr>
+<th>缩写</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>wdksap</td>
+<td>我的考试安排</td>
+</tr>
+<tr>
+<td>cxyxkwapkwdkc</td>
+<td>查询已选课未安排考务的课程</td>
+</tr>
+<tr>
+<td>cxwapdksrw</td>
+<td>查询未安排的考试任务</td>
+</tr>
+</tbody>
+</table>
+<h5>我的考试安排</h5>
+<p>给 https://ehall.xidian.edu.cn/jwapp/sys/studentWdksapApp/modules/wdksap/wdksap.do 发送 POST 请求，发送数据如下：</p>
+<pre><code>{
+    &quot;XNXQDM&quot;:semester,
+    &quot;*order&quot;:&quot;-KSRQ,-KSSJMS&quot;
+}
+</code></pre>
+<p>返回的数据在 [datas][wdksap] 里面，提取之。</p>
+<p>如果有考试的话，[extParams][code] 为 1，数据在 [row] 里面。</p>
+<h5>查询已选课未安排考务的课程</h5>
+<p>给 https://ehall.xidian.edu.cn/jwapp/sys/studentWdksapApp/modules/wdksap/cxyxkwapkwdkc.do 发送 POST 请求，发送数据如下：</p>
+<pre><code class="language-json">{
+    &quot;XNXQDM&quot;:semester,
+}
+</code></pre>
+<p>返回的数据在 [datas][cxyxkwapkwdkc] 里面，提取之，接下来咋处理我不想说了。</p>
+<h5>查询未安排的考试任务</h5>
+<p>这个我每次请求，返回的数据都是&quot;学生查询在考试任务中且没有安排的课程&quot;。所以我也不知道该咋办了，兴许这又是教务处啥不可说的禁区？</p>
+<h4>金智黑话翻译表</h4>
+<p>打开网页调试器的网络分项，我看到了请求几个 html 的东西，里面就有缩写和对应中文，这里我摘抄几个。</p>
+<table>
+<thead>
+<tr>
+<th>缩写</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>KSSJMS</td>
+<td>考试时间</td>
+</tr>
+<tr>
+<td>KCM</td>
+<td>课程名</td>
+</tr>
+<tr>
+<td>JASMC</td>
+<td>考试地点(具体是啥我也不知道)</td>
+</tr>
+<tr>
+<td>ZJJSXM</td>
+<td>主讲教师</td>
+</tr>
+<tr>
+<td>ZWH</td>
+<td>座位号</td>
+</tr>
+<tr>
+<td>YKKS</td>
+<td>已完成考试</td>
+</tr>
+<tr>
+<td>WKKS</td>
+<td>未完成考试</td>
+</tr>
+<tr>
+<td>BZ</td>
+<td>考生须知</td>
+</tr>
+<tr>
+<td>YXZXAPKS</td>
+<td>院系自行安排</td>
+</tr>
+</tbody>
+</table>
+<h3>个人信息</h3>
+<p>感觉这是最没用的功能了，除了打开应用告诉你是谁之外(溜了)</p>
+<h4>获取方法</h4>
+<p>还记得获取成绩前，我们需要把跳转网址自行发送 GET 请求吗？获取个人信息时候也需要这么做:-P</p>
+<p>如果你需要获取很基本的信息，我们往 http://ehall.xidian.edu.cn/xsfw/sys/swpubapp/userinfo/getConfigUserInfo.do?USERID=学号 发送 POST 请求。数据的 returnCode 里面，有 #E000000000000 就是成功。获取的信息在 [data] 里面，是一个数组。数组元素依次是学号，姓名，学院。</p>
+<p>要想获取更加具体的信息，请往 http://ehall.xidian.edu.cn/xsfw/sys/jbxxapp/modules/infoStudent/getStuBatchInfo.do 发送信息，附带数据如下：</p>
+<pre><code class="language-json">{&quot;requestParamStr&quot;: 你的学号}
+</code></pre>
+<h4>金智黑话翻译表</h4>
+<table>
+<thead>
+<tr>
+<th>缩写</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>XM</td>
+<td>姓名</td>
+</tr>
+<tr>
+<td>XBDM_DISPLAY</td>
+<td>性别</td>
+</tr>
+<tr>
+<td>BZ5_DISPLAY</td>
+<td>书院</td>
+</tr>
+<tr>
+<td>DZ_DWDM_DISPLAY</td>
+<td>学院</td>
+</tr>
+<tr>
+<td>ZYDM_DISPLAY</td>
+<td>专业</td>
+</tr>
+<tr>
+<td>ZSDZ</td>
+<td>宿舍</td>
+</tr>
+</tbody>
+</table>
+<h2>总结</h2>
+<p>感觉看了那么多东西，算是把网页请求和 Cookie 啥的了解了一下，保证将来计网学的时候没有陌生感(虽然据说不咋讲)。</p>
+<p>希望那玩意能写出来吧，免得将来找工作说没有编程经验，虽然 Dart 和 Flutter 也是很小众就是了。</p>
+<p>SuperBart 2022-8-31 (Revisited 2021-8-17)</p>
+</article>
+
+
+<article>
+    <a href="../index.html">返回老版首页</a><br>
+    <a href="https://www.superbart.xyz">返回新版首页</a>
+</article>
+
+
+
+<footer>
+<p>
+    Copyright 2021-2022<a href="mailto:superbart_chen@qq.com">SuperBart</a><a href="https://icp.gov.moe/?keyword=20220626" target="_blank">萌ICP备20220626号</a><br>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a>进行许可。
+</p>
+</footer>
+
+</body>
+</html>
+
