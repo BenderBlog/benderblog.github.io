@@ -21600,7 +21600,7 @@ nQ(a){return A.a9_(new A.p8("Paste is not implemented for this browser."),null,t
 A.fv.prototype={
 gF_(){var s=this.a
 s=s==null?null:s.canvasKitBaseUrl
-return s==null?"=https://cdn.jsdelivr.net/npm/canvaskit-wasm@0.25.1/bin/":s},
+return s==null?"https://unpkg.com/canvaskit-wasm@0.35.0/bin/":s},
 gF0(){var s=this.a
 s=s==null?null:s.canvasKitForceCpuOnly
 return s===!0},
