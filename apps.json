@@ -1,0 +1,33 @@
+{
+  "name": "Traintime PDA Altstore",
+  "identifier": "org.superbart.watermeter",
+  "apps": [
+    {
+      "name": "Traintime PDA",
+      "bundleIdentifier": "org.superbart.watermeter",
+      "developerName": "BenderBlog Rodriguez",
+      "versionDate": "2023-06.22T09:30:00+08:00",
+      "localizedDescription": "Another personal data assistant for XDU.",
+      "iconURL": "https://raw.githubusercontent.com/BenderBlog/watermeter/main/assets/icon.png",
+      "screenshotURLs": [
+        "https://legacy.superbart.xyz/picture/xdyou/homepage.jpg",
+        "https://legacy.superbart.xyz/picture/xdyou/classtable.jpg",
+        "https://legacy.superbart.xyz/picture/xdyou/exam.jpg",
+        "https://legacy.superbart.xyz/picture/xdyou/score.jpg",
+        "https://legacy.superbart.xyz/picture/xdyou/sport.jpg",
+        "https://legacy.superbart.xyz/picture/xdyou/xddir.jpg"
+      ],
+      "versions": [
+        {
+          "version": "0.0.4-20230622",
+          "date": "2023-06-22",
+          "downloadURL": "https://legacy.superbart.xyz/xdyou/Traintime PDA v0.0.4-20230622.ipa",
+          "localizedDescription": "Emergency fix: change the way detecting school net."
+        }
+      ]
+    }
+  ],
+  "userInfo": {
+
+  }
+}
