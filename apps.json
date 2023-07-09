@@ -6,7 +6,7 @@
       "name": "Traintime PDA",
       "bundleIdentifier": "org.superbart.watermeter",
       "developerName": "BenderBlog Rodriguez",
-      "versionDate": "2023-06-25T09:30:00+08:00",
+      "versionDate": "2023-07-09T09:30:00+08:00",
       "localizedDescription": "Another personal data assistant for XDU.",
       "iconURL": "https://raw.githubusercontent.com/BenderBlog/watermeter/main/assets/icon.png",
       "screenshotURLs": [
@@ -19,10 +19,10 @@
       ],
       "versions": [
         {
-          "version": "0.0.5-20230625",
-          "date": "2023-06-25",
-          "downloadURL": "https://legacy.superbart.xyz/xdyou/Traintime PDA v0.0.5-20230625.ipa",
-          "localizedDescription": "Score detail window."
+          "version": "0.0.6-20230709",
+          "date": "2023-07-09",
+          "downloadURL": "https://legacy.superbart.xyz/xdyou/Traintime.PDA.v0.0.6-20230709.ipa",
+          "localizedDescription": "Restructed."
         }
       ]
     }
