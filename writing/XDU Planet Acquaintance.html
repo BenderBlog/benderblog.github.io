@@ -60,46 +60,46 @@
             文件，我把这个人的图标，名称，地址都传了过去。而最终为了输出 json 更好被客户端解码，我在每个返回值外面都套上了 stdClass。</p>
         <p>基本上 API 就算这样了，我这里写出来。</p>
         <pre><code>GET /xduplanet.php
-        {
-          "repos": {
-            "benderblog": {         // key: 该对象名称，后面查询使用
-              "name": "SuperBart/Benderblog ~ 开发者",     // 显示名称
-              "website": "https://www.superbart.top",     // 博客网站
-              "feed": "https://www.superbart.top/index.xml",    // RSS 或 ATOM 源头
-              "favicon": "https://legacy.superbart.top/favicon.ico" // 图标
-            },
-          }
-        }
+{
+    "repos": {
+        "benderblog": {         // key: 该对象名称，后面查询使用
+            "name": "SuperBart/Benderblog ~ 开发者",     // 显示名称
+            "website": "https://www.superbart.top",     // 博客网站
+            "feed": "https://www.superbart.top/index.xml",    // RSS 或 ATOM 源头
+            "favicon": "https://legacy.superbart.top/favicon.ico" // 图标
+        },
+    }
+}
     </code></pre>
 
         <pre><code>GET /xduplanet.php?feed=key
 其中 key 是上述提到的后面查询使用的 key
         
+{
+    // 文章列表，下面分别对应标题，发布时间和来源链接
+    "list": [
         {
-          // 文章列表，下面分别对应标题，发布时间和来源链接
-          "list": [
-            {
-              "title": "Flutter 介绍",
-              "time": "2023-04-29T08:00:00+08:00",
-              "url": "https://www.superbart.top/p/flutter-introduction.html"
-            },
-          ],
-          // lastUpdateDate：本数据的获取时间，为将来备
-          "lastUpdateTime": 1689432413用
-        }
+            "title": "Flutter 介绍",
+            "time": "2023-04-29T08:00:00+08:00",
+            "url": "https://www.superbart.top/p/flutter-introduction.html"
+        },
+    ],
+    // lastUpdateDate：本数据的获取时间，为将来备用
+    "lastUpdateTime": 1689432413
+}
     </code></pre>
 
         <pre><code>GET /xduplanet.php?feed=key&p=0
-        其中 key 是上述提到的后面查询使用的 key，p 指上面文章列表中第几个文章
+其中 key 是上述提到的后面查询使用的 key，p 指上面文章列表中第几个文章
         
-        // 文章标题，来源链接，发布时间，内容
-        // 注意内容是和前面所述老网站网页输出是一样的，也就是图片，视频等会被隐藏掉
-        {
-          "title": "Flutter 介绍",
-          "link": "https://www.superbart.top/p/flutter-introduction.html",
-          "time": 1682726400,
-          "content": "Omit here."
-        }
+// 文章标题，来源链接，发布时间，内容
+// 注意内容是和前面所述老网站网页输出是一样的，也就是图片，视频等会被隐藏掉
+{
+    "title": "Flutter 介绍",
+    "link": "https://www.superbart.top/p/flutter-introduction.html",
+    "time": 1682726400,
+    "content": "Omit here."
+}
     </code></pre>
 
         <p>我在 Traintime PDA 里面的相关分页也写了相关页面，还明白了 PageView 如何保存状态，每天一个编程小常识这就是？</p>
