@@ -13196,7 +13196,7 @@ $__dart_deferred_initializers__.current = function(hunkHelpers, init, holdersLis
   };
   A._XidianDirState_buttons_closure.prototype = {
     call$0() {
-      return A.launchUrl(C.Uri_parse("https://legacy.superbart.xyz", 0, null));
+      return A.launchUrl(C.Uri_parse("https://legacy.superbart.top", 0, null));
     },
     $signature: 0
   };

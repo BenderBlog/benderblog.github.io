@@ -14,34 +14,35 @@
 <body>
 
     <article>
-    <strong>本站点专为老久电脑优化，也是我训练html/css的场地。想看新版网站，<a href="https://www.superbart.xyz">戳这里。</a><br>
-    内容基本一样，如有不同，请以新网站为准。</strong><br>请放心，这是我图库所在。
+        <strong>本站点专为老久电脑优化，也是我训练html/css的场地。想看新版网站，<a href="https://www.superbart.top">戳这里。</a><br>
+            内容基本一样，如有不同，请以新网站为准。</strong><br>请放心，这是我图库所在。
     </article>
 
 
     <article>
 
-    <h1>archinstall 初体验 (省流文字版)</h1>
+        <h1>archinstall 初体验 (省流文字版)</h1>
 
-    <p>继2012年Arch Linux弃用了安装器之后，在今年的4月1日，官方发布了全新的安装器，不过仍在实验阶段。今天我来体验一下。视频版在此，不建议不开倍速观看：</p>
+        <p>继2012年Arch Linux弃用了安装器之后，在今年的4月1日，官方发布了全新的安装器，不过仍在实验阶段。今天我来体验一下。视频版在此，不建议不开倍速观看：</p>
 
-    <p><a href="https://www.bilibili.com/video/BV1GA41157XK">Archlinux 全新官方安装器 archinstall 初体验 @ Superbart</a></p>
+        <p><a href="https://www.bilibili.com/video/BV1GA41157XK">Archlinux 全新官方安装器 archinstall 初体验 @ Superbart</a></p>
 
-    <p>首先，搞到一个2021-04-01版本的Arch Linux安装镜像，启动后在命令行下输入"archinstall"命令即可运行该安装程序。</p>
-    <p>再编辑版注：鉴于该软件在我回顾的时候，已经有所改变，故这里不放出所有贴图。</p>
-    <p>首先出现的是键盘布局选择界面，这里在20(UK)和21(US)之间选择，UK布局较US多了一些法文字母，这样就可以打出café, coup d'etat这样的在英语中使用的法文词汇了。</p>
-    <p>之后我们可以选择从哪里的服务器下载软件包，较传统的安装方式，这个可以说是方便了不少。原来的安装方式是执行个测速工具，或是直接修改mirrorlist。</p>
-    <p>然后可以选择安装进的硬盘，还能选择是否覆盖安装等，不过没有分区工具选项，只能使用一个默认的分区方案，分区为/boot和根目录（该工具仅支持UEFI）:-\</p>
-    <p>选择硬盘后，选择分区文件系统，除了ext4外我一无所知。这里有一个给磁盘加密的选项，挺好的。Houge_Langley@Bilibili 做了几期视频介绍，链接附下。</p>
-    <p>分区配置完毕后，这里设置电脑名称，超级用户密码，添加用户。这里有两个亮点：提示不设置超级用户密码的话，会禁用超级管理员用户（虽然Linux都这样，但在这里提示也是件好事）；还有赋予新用户超级管理权限（比visudo好用多了）。</p>
-    <p>安装工具新提供了安装桌面环境，显卡驱动等选项，目前没有xfce,mate,lxde等:-| 至于为啥没有gnome-wayland的话，gnome默认为wayland。</p>
-    <p>对了，archinstall是一个框架，任何会用python的人都可以用它写自己的安装脚本。</p>
-    <p>我们还可以添加其他的安装包，这里我安装了两个Virtualbox客户机的模块。</p>
-    <p><img src="../picture/Experience%20of%20Archinstall/archinstall_summary.png"></p>
-    <p>然后程序给出了一个总结，总觉得应该写成一个让人好明白的东西，而不是这个类似bash的配置文件。注意没有引导程序选择，因为只能选择systemd-boot，侧面体现其仍在开发。</p>
-    <p>最后重启后，根据我选择的GNOME环境，程序安装并配置好了，不过VBOX增强工具没有激活，需要在上述安装完成后arch-chroot一下。</p>
+        <p>首先，搞到一个2021-04-01版本的Arch Linux安装镜像，启动后在命令行下输入"archinstall"命令即可运行该安装程序。</p>
+        <p>再编辑版注：鉴于该软件在我回顾的时候，已经有所改变，故这里不放出所有贴图。</p>
+        <p>首先出现的是键盘布局选择界面，这里在20(UK)和21(US)之间选择，UK布局较US多了一些法文字母，这样就可以打出café, coup d'etat这样的在英语中使用的法文词汇了。</p>
+        <p>之后我们可以选择从哪里的服务器下载软件包，较传统的安装方式，这个可以说是方便了不少。原来的安装方式是执行个测速工具，或是直接修改mirrorlist。</p>
+        <p>然后可以选择安装进的硬盘，还能选择是否覆盖安装等，不过没有分区工具选项，只能使用一个默认的分区方案，分区为/boot和根目录（该工具仅支持UEFI）:-\</p>
+        <p>选择硬盘后，选择分区文件系统，除了ext4外我一无所知。这里有一个给磁盘加密的选项，挺好的。Houge_Langley@Bilibili 做了几期视频介绍，链接附下。</p>
+        <p>分区配置完毕后，这里设置电脑名称，超级用户密码，添加用户。这里有两个亮点：提示不设置超级用户密码的话，会禁用超级管理员用户（虽然Linux都这样，但在这里提示也是件好事）；还有赋予新用户超级管理权限（比visudo好用多了）。
+        </p>
+        <p>安装工具新提供了安装桌面环境，显卡驱动等选项，目前没有xfce,mate,lxde等:-| 至于为啥没有gnome-wayland的话，gnome默认为wayland。</p>
+        <p>对了，archinstall是一个框架，任何会用python的人都可以用它写自己的安装脚本。</p>
+        <p>我们还可以添加其他的安装包，这里我安装了两个Virtualbox客户机的模块。</p>
+        <p><img src="../picture/Experience%20of%20Archinstall/archinstall_summary.png"></p>
+        <p>然后程序给出了一个总结，总觉得应该写成一个让人好明白的东西，而不是这个类似bash的配置文件。注意没有引导程序选择，因为只能选择systemd-boot，侧面体现其仍在开发。</p>
+        <p>最后重启后，根据我选择的GNOME环境，程序安装并配置好了，不过VBOX增强工具没有激活，需要在上述安装完成后arch-chroot一下。</p>
 
-    <p>小结：<br>
+        <p>小结：<br>
         <ul>
             <li>这个工具目前处于一个鸡肋的状态。</dt>
             <li>这个工具比较不透明，我不知道选择某个选项后会出现什么结果。执行时默认也没有比较详细的信息。</li>
@@ -51,25 +52,28 @@
             <li>当然，这个安装程序可以自己写python脚本来配置。对于有定制需求的人来说，是件好事。但对于我这种有需求，但是技术不到位的人来说，就不太好了，还是走官方流程吧。</li>
             <li>对于只是拿这个装13的人来说，只要英文过关的话，还挺方便的呢（bushi</li>
         </ul>
-    </p>
+        </p>
 
-    <p>当然，官方也在积极改进这个软件，希望将来能够更加好用吧。也希望成熟的那一天，纯输命令的安装方式还能存在。 </p>
+        <p>当然，官方也在积极改进这个软件，希望将来能够更加好用吧。也希望成熟的那一天，纯输命令的安装方式还能存在。 </p>
 
-    <p>SuperBart 2021-5-1 (Revisited 2021-8-17)</p>
+        <p>SuperBart 2021-5-1 (Revisited 2021-8-17)</p>
 
     </article>
 
     <article>
-    <a href="https://www.bilibili.com/video/BV1BZ4y1G7ie">Houge_Langley 采访 felixonmars</a><br>
-    <a href="https://www.bilibili.com/video/BV1s5411N7qN">Houge_Langley 在 ZFS 上面装 Arch Linux</a><br>
-    <a href="https://www.bilibili.com/video/BV1X7411K7fo">老莱给大家介绍Linux的十大优越之处！</a><br>
-    <a href="../index.html">返回老版首页</a><br>
-    <a href="https://www.superbart.xyz">返回新版首页</a>
+        <a href="https://www.bilibili.com/video/BV1BZ4y1G7ie">Houge_Langley 采访 felixonmars</a><br>
+        <a href="https://www.bilibili.com/video/BV1s5411N7qN">Houge_Langley 在 ZFS 上面装 Arch Linux</a><br>
+        <a href="https://www.bilibili.com/video/BV1X7411K7fo">老莱给大家介绍Linux的十大优越之处！</a><br>
+        <a href="../index.html">返回老版首页</a><br>
+        <a href="https://www.superbart.top">返回新版首页</a>
     </article>
     <footer>
-    <p>
-        Copyright 2021-2022<a href="mailto:superbart_chen@qq.com">SuperBart</a><a href="https://icp.gov.moe/?keyword=20220626" target="_blank">萌ICP备20220626号</a><br>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a>进行许可。
-    </p>
+        <p>
+            Copyright 2021-2024<a href="mailto:superbart_chen@qq.com">SuperBart</a><a
+                href="https://icp.gov.moe/?keyword=20220626" target="_blank">萌ICP备20220626号</a><br>本作品采用<a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a>进行许可。
+        </p>
     </footer>
 </body>
+
 </html>

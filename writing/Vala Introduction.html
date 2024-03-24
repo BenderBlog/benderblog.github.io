@@ -4,7 +4,8 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title>Vala 介绍</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/rainbow.min.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/rainbow.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
     <link rel="stylesheet" href="../default.css">
     <script>
@@ -15,64 +16,71 @@
 </head>
 
 <body>
-<article>
-<strong>本站点专为老久电脑优化，也是我训练html/css的场地。想看新版网站，<a href="https://www.superbart.xyz">戳这里。</a><br>
- 内容基本一样，如有不同，请以新网站为准。</strong><br>
- 请放心，这是我图库所在。
-</article>
+    <article>
+        <strong>本站点专为老久电脑优化，也是我训练html/css的场地。想看新版网站，<a href="https://www.superbart.top">戳这里。</a><br>
+            内容基本一样，如有不同，请以新网站为准。</strong><br>
+        请放心，这是我图库所在。
+    </article>
 
-<article>
-<h1>Vala 介绍</h1>
-<p><a href="https://vala.dev/">Vala</a> 是由 <a href="https://www.gnome.org/">GNOME 小矮人</a>开发的面向对象编程语言。编程语法接近 Java，围绕 <a href="https://gitlab.gnome.org/GNOME/glib/">GLib</a> 库展开。编译方式是先翻译成 C 语言代码，然后编译。用途嘛……我来讲个故事吧。</p>
-<p>我半年前学了 Dart，Google 开发的语言，编程语法接近 Javascript。官网说它是“多用途语言”，然而我感觉多数人学了它，就是为了用 Flutter :-P</p>
-<p>Vala 也是这样，名义上是一个“多用途语言”，但是我感觉多数人学了它，只是为了 GTK。我也是不知道为啥，非得用这个语言写我的<a href="https://github.com/BenderBlog/Practise-Programs/tree/main/MySQL/exp4">数据库大作业</a>，花了两周时间边学边写，最后也不知道我学了个啥……</p>
-<p>不得不说，GLib 是一个很强大的库。本来说是给 GTK 服务的，后来独立出去了。它实现了单/双向链表，变长数组，树，Map 等数据结构。它还以 GObject 为中心，构建了一个相当完善的，庞大的，<del>让我这个菜鸡不知所以的</del>类系统。</p>
-<p>接下来大致介绍顺序：</p>
-<ol>
-<li>
-<p>基本输入输出（从键盘输入，从终端输出）</p>
-</li>
-<li>
-<p>判断语句 if-else 和 switch</p>
-</li>
-<li>
-<p>循环语句，包括计数和计事件循环</p>
-</li>
-<li>
-<p>我一点都不懂的面向对象</p>
-</li>
-<li>
-<p>GLib 库和 Gee 库</p>
-</li>
-<li>
-<p>SQLite 3 库</p>
-</li>
-</ol>
-<h2>推荐链接</h2>
-<p>先给大家推荐一些前人的经验教训：</p>
-<ul>
-<li>
-<p><a href="https://wszqkzqk.github.io/2022/10/17/%E6%8E%A2%E7%B4%A2Vala%E8%AF%AD%E8%A8%80/">探索Vala语言 - 星外之神的博客 | wszqkzqk Blog</a></p>
-</li>
-<li>
-<p><a href="https://valadoc.org/index.htm">Valadoc.org (Vala 库文档网站)</a></p>
-</li>
-<li>
-<p><a href="https://wiki.gnome.org/Projects/Vala/Documentation">Projects/Vala/Documentation - GNOME Wiki! (官方文档)</a></p>
-</li>
-</ul>
-<h2>基本输入输出</h2>
-<p>官方演示：<a href="https://wiki.gnome.org/Projects/Vala/BasicSample">Projects/Vala/BasicSample - GNOME Wiki!</a></p>
-<p>输出一句话，都是那德行：</p>
-<pre><code>void main() {
+    <article>
+        <h1>Vala 介绍</h1>
+        <p><a href="https://vala.dev/">Vala</a> 是由 <a href="https://www.gnome.org/">GNOME 小矮人</a>开发的面向对象编程语言。编程语法接近
+            Java，围绕 <a href="https://gitlab.gnome.org/GNOME/glib/">GLib</a> 库展开。编译方式是先翻译成 C 语言代码，然后编译。用途嘛……我来讲个故事吧。</p>
+        <p>我半年前学了 Dart，Google 开发的语言，编程语法接近 Javascript。官网说它是“多用途语言”，然而我感觉多数人学了它，就是为了用 Flutter :-P</p>
+        <p>Vala 也是这样，名义上是一个“多用途语言”，但是我感觉多数人学了它，只是为了 GTK。我也是不知道为啥，非得用这个语言写我的<a
+                href="https://github.com/BenderBlog/Practise-Programs/tree/main/MySQL/exp4">数据库大作业</a>，花了两周时间边学边写，最后也不知道我学了个啥……
+        </p>
+        <p>不得不说，GLib 是一个很强大的库。本来说是给 GTK 服务的，后来独立出去了。它实现了单/双向链表，变长数组，树，Map 等数据结构。它还以 GObject
+            为中心，构建了一个相当完善的，庞大的，<del>让我这个菜鸡不知所以的</del>类系统。</p>
+        <p>接下来大致介绍顺序：</p>
+        <ol>
+            <li>
+                <p>基本输入输出（从键盘输入，从终端输出）</p>
+            </li>
+            <li>
+                <p>判断语句 if-else 和 switch</p>
+            </li>
+            <li>
+                <p>循环语句，包括计数和计事件循环</p>
+            </li>
+            <li>
+                <p>我一点都不懂的面向对象</p>
+            </li>
+            <li>
+                <p>GLib 库和 Gee 库</p>
+            </li>
+            <li>
+                <p>SQLite 3 库</p>
+            </li>
+        </ol>
+        <h2>推荐链接</h2>
+        <p>先给大家推荐一些前人的经验教训：</p>
+        <ul>
+            <li>
+                <p><a href="https://wszqkzqk.github.io/2022/10/17/%E6%8E%A2%E7%B4%A2Vala%E8%AF%AD%E8%A8%80/">探索Vala语言 -
+                        星外之神的博客 | wszqkzqk Blog</a></p>
+            </li>
+            <li>
+                <p><a href="https://valadoc.org/index.htm">Valadoc.org (Vala 库文档网站)</a></p>
+            </li>
+            <li>
+                <p><a href="https://wiki.gnome.org/Projects/Vala/Documentation">Projects/Vala/Documentation - GNOME
+                        Wiki! (官方文档)</a></p>
+            </li>
+        </ul>
+        <h2>基本输入输出</h2>
+        <p>官方演示：<a href="https://wiki.gnome.org/Projects/Vala/BasicSample">Projects/Vala/BasicSample - GNOME Wiki!</a>
+        </p>
+        <p>输出一句话，都是那德行：</p>
+        <pre><code>void main() {
     // GLib 的 print 函数
     print(&quot;Clapton is GOD!&quot;);
     // 使用到了 stdin / stdout / stderr 对象
     stdout.printf(&quot;%s is GOD!&quot;,&quot;Clapton&quot;);
 }
 </code></pre>
-<p>输入一个数字：</p>
-<pre><code>void main() {
+        <p>输入一个数字：</p>
+        <pre><code>void main() {
     // 双精度浮点数
     double a;
     // 类似 C 语言的 scanf，注意 out
@@ -86,16 +94,16 @@
     stdout.printf(&quot;%d&quot;,b);
 }
 </code></pre>
-<p>输入字符串：</p>
-<pre><code>void main() {
+        <p>输入字符串：</p>
+        <pre><code>void main() {
     stdout.printf(&quot;Welcome, what's your name?&quot;);
     string a = stdin.read_line();
     stdout.printf(&quot;OK, %s, main course is prepared for you.&quot;,a);
 }
 </code></pre>
-<h2>判断语句</h2>
-<p>if-else 判断：</p>
-<pre><code>void main() {
+        <h2>判断语句</h2>
+        <p>if-else 判断：</p>
+        <pre><code>void main() {
     stdout.printf(&quot;Enter a year: &quot;);
     int year;
     stdin.scanf(&quot;%d&quot;,out year);
@@ -106,11 +114,11 @@
     }
 }
 </code></pre>
-<p>swtich 判断：</p>
-<p>省略，很少用到。</p>
-<h2>循环语句</h2>
-<p>计次数循环 for</p>
-<pre><code>// 金字塔输出
+        <p>swtich 判断：</p>
+        <p>省略，很少用到。</p>
+        <h2>循环语句</h2>
+        <p>计次数循环 for</p>
+        <pre><code>// 金字塔输出
 void main() {
     int a;
     stdin.scanf(&quot;%d&quot;,out a);
@@ -125,8 +133,8 @@ void main() {
     }
 }
 </code></pre>
-<p>计事件循环 while</p>
-<pre><code>// Vala 引用库的方式
+        <p>计事件循环 while</p>
+        <pre><code>// Vala 引用库的方式
 using Random;
 
 void main() {
@@ -148,11 +156,13 @@ void main() {
     print(&quot;Match\n&quot;);
 }
 </code></pre>
-<h2>面向对象特性</h2>
-<p>先说一句，我面向对象课学的一塌糊涂，如果想了解更多，请看官方介绍：<a href="https://wiki.gnome.org/Projects/Vala/Tutorial#Object_Oriented_Programming">Project/Vala/Tutorial#OOP</a></p>
-<p>注意，Vala 基于 GLib，GLib 包含 GObject，GObject 仅支持单向继承。所以，跟 Java 一样，Vala 是单继承+接口。</p>
-<p>从大家喜闻乐见的开始：</p>
-<pre><code>class Animal {
+        <h2>面向对象特性</h2>
+        <p>先说一句，我面向对象课学的一塌糊涂，如果想了解更多，请看官方介绍：<a
+                href="https://wiki.gnome.org/Projects/Vala/Tutorial#Object_Oriented_Programming">Project/Vala/Tutorial#OOP</a>
+        </p>
+        <p>注意，Vala 基于 GLib，GLib 包含 GObject，GObject 仅支持单向继承。所以，跟 Java 一样，Vala 是单继承+接口。</p>
+        <p>从大家喜闻乐见的开始：</p>
+        <pre><code>class Animal {
     // 类里面的变量
     // 和 Java 一样，有 private protected public
     protected string name;
@@ -187,8 +197,8 @@ void main() {
     a.action();
 }
 </code></pre>
-<p>这个是我从网上抄的一段代码：</p>
-<pre><code>// 接口，也就是不能被实例化的虚类。
+        <p>这个是我从网上抄的一段代码：</p>
+        <pre><code>// 接口，也就是不能被实例化的虚类。
 interface Printable {
     // abstract 要由继承的类实现
     public abstract string print ();
@@ -225,38 +235,39 @@ void main (string[] args) {
     print (overridden.pretty_print ());
 }
 </code></pre>
-<h2>Gee</h2>
-<p><a href="https://wiki.gnome.org/Projects/Libgee">Gee</a> 相当于 C++ 里面的 STL 。我对这个了解不多，先把官方的示例贴上来：<a href="https://wiki.gnome.org/Projects/Vala/GeeSamples">Projects/Vala/GeeSamples - GNOME Wiki!</a></p>
-<p>实际上 GLib 已经实现了很多的数据结构，但我个人建议 Gee，功能比 Glib 本身有的更丰富，但是编程的时候需要添加 Gee 库。</p>
-<pre><code>using Gee;
+        <h2>Gee</h2>
+        <p><a href="https://wiki.gnome.org/Projects/Libgee">Gee</a> 相当于 C++ 里面的 STL 。我对这个了解不多，先把官方的示例贴上来：<a
+                href="https://wiki.gnome.org/Projects/Vala/GeeSamples">Projects/Vala/GeeSamples - GNOME Wiki!</a></p>
+        <p>实际上 GLib 已经实现了很多的数据结构，但我个人建议 Gee，功能比 Glib 本身有的更丰富，但是编程的时候需要添加 Gee 库。</p>
+        <pre><code>using Gee;
 </code></pre>
-<p>Glib 中，我有用过:</p>
-<ul>
-<li>
-<p>Array&lt;类型&gt;：变长数组</p>
-</li>
-<li>
-<p>List&lt;类型&gt;：双向列表</p>
-</li>
-</ul>
-<p>Gee中，我有用过：</p>
-<ul>
-<li>
-<p>Set&lt;类型&gt;：无重复集合</p>
-</li>
-<li>
-<p>HashMap&lt;类型1,类型2&gt;：哈希字典</p>
-</li>
-</ul>
-<p>具体用法请参阅相关文档和示例，链接给完了，我溜了~</p>
-<h2>迭代，匿名函数</h2>
-<p>首先是匿名函数，很简单：</p>
-<pre><code>(函数形参)=&gt;{函数体语句}
+        <p>Glib 中，我有用过:</p>
+        <ul>
+            <li>
+                <p>Array&lt;类型&gt;：变长数组</p>
+            </li>
+            <li>
+                <p>List&lt;类型&gt;：双向列表</p>
+            </li>
+        </ul>
+        <p>Gee中，我有用过：</p>
+        <ul>
+            <li>
+                <p>Set&lt;类型&gt;：无重复集合</p>
+            </li>
+            <li>
+                <p>HashMap&lt;类型1,类型2&gt;：哈希字典</p>
+            </li>
+        </ul>
+        <p>具体用法请参阅相关文档和示例，链接给完了，我溜了~</p>
+        <h2>迭代，匿名函数</h2>
+        <p>首先是匿名函数，很简单：</p>
+        <pre><code>(函数形参)=&gt;{函数体语句}
 (函数形参)=&gt;一条语句
 </code></pre>
-<p>一般用于函数作形参的时候，临时写一个简单的。比如下面那个情况。</p>
-<p>还有迭代，有些预先定义好的数据结构都支持迭代，使用的时候使用 <code>foreach</code> 方法就好。比如说：</p>
-<pre><code>void main () {
+        <p>一般用于函数作形参的时候，临时写一个简单的。比如下面那个情况。</p>
+        <p>还有迭代，有些预先定义好的数据结构都支持迭代，使用的时候使用 <code>foreach</code> 方法就好。比如说：</p>
+        <pre><code>void main () {
     List&lt;int&gt; a = new List&lt;int&gt;();
     a.append (1);
     a.append (2);
@@ -267,9 +278,9 @@ void main (string[] args) {
     a.foreach((i)=&gt;print(i.to_string ()));
 }
 </code></pre>
-<h2>异常处理和空值</h2>
-<p>先写出一个错误空间，说明这是啥大类的错误，里面可以细分。</p>
-<pre><code>public errordomain DatabaseError {
+        <h2>异常处理和空值</h2>
+        <p>先写出一个错误空间，说明这是啥大类的错误，里面可以细分。</p>
+        <pre><code>public errordomain DatabaseError {
     COULDNT_OPEN,
     EXECUTION_FAILED,
     PREPARATION_FAILED,
@@ -278,8 +289,8 @@ void main (string[] args) {
     NOT_FOUND,
 }
 </code></pre>
-<p>写函数/方法的时候，可以加入 <code>throws</code> 关键字，注明会抛出啥错误。里面需要抛出错误的时候，使用 <code>throw</code> 语句抛出。下面是一个例子：</p>
-<pre><code>// 说明这个函数会抛出 DatabaseError 错误
+        <p>写函数/方法的时候，可以加入 <code>throws</code> 关键字，注明会抛出啥错误。里面需要抛出错误的时候，使用 <code>throw</code> 语句抛出。下面是一个例子：</p>
+        <pre><code>// 说明这个函数会抛出 DatabaseError 错误
 private void open () throws DatabaseError {
     int sql_return = Sqlite.Database.open_v2 (NAME_OF_DB, out m_db);
     if (sql_return != Sqlite.OK) {
@@ -288,8 +299,8 @@ private void open () throws DatabaseError {
     }
 }
 </code></pre>
-<p>要捕捉抛出的错误，请使用 try-catch-finally 语句：</p>
-<pre><code>public void createDatabase () {
+        <p>要捕捉抛出的错误，请使用 try-catch-finally 语句：</p>
+        <pre><code>public void createDatabase () {
     try {
         open ();
         exec (CREATE_FLIGHT_TABLE_QUERY);
@@ -304,16 +315,16 @@ private void open () throws DatabaseError {
     // 可以加写一个 finally，finally 总会被运行
 }
 </code></pre>
-<p>Vala 的变量可以设为空值，方法是加一个问号：</p>
-<pre><code>void main () {
+        <p>Vala 的变量可以设为空值，方法是加一个问号：</p>
+        <pre><code>void main () {
     // 这句话会报错
     int a = null;
     // 这句话不会报错
     int ? b = null;
 }
 </code></pre>
-<p>我个人认为，如果你不能确保方法确实能返回一个元素，可以使用这个。</p>
-<pre><code>int ? a () {
+        <p>我个人认为，如果你不能确保方法确实能返回一个元素，可以使用这个。</p>
+        <pre><code>int ? a () {
     try {
         int result;
         // 我没在摸鱼
@@ -323,30 +334,31 @@ private void open () throws DatabaseError {
     }
 }
 </code></pre>
-<p>当然，可以不用这么麻烦，这只是一个例子。</p>
-<h2>SQLite 3 库</h2>
-<p><a href="https://www.sqlite.org/index.html">SQLite</a> 是一个库，实现了很完备的关系数据库。它将数据库存在一个文件里，使用的时候，调用 SQLite 库相应的函数，来对这个文件数据库进行基本操作。</p>
-<p>这东西是一个 C 语言库。但 Vala 可以使用 C 库，它使用 vapi 文件来对应 C 的头文件。(实际上 Vala 也可以写 C 语言库，毕竟这玩意最后还是会变成 C 语言来编译。)</p>
-<p>所以说，Vala 的 SQLite 库用起来应该和 C 语言的差不多。不过请注意，Vala 是面向对象的，而 SQLite 的库在引用到 Vala 的时候，做了面向对象的处理。</p>
-<p>使用前，引用这个库：</p>
-<pre><code>using Sqlite;
+        <p>当然，可以不用这么麻烦，这只是一个例子。</p>
+        <h2>SQLite 3 库</h2>
+        <p><a href="https://www.sqlite.org/index.html">SQLite</a> 是一个库，实现了很完备的关系数据库。它将数据库存在一个文件里，使用的时候，调用 SQLite
+            库相应的函数，来对这个文件数据库进行基本操作。</p>
+        <p>这东西是一个 C 语言库。但 Vala 可以使用 C 库，它使用 vapi 文件来对应 C 的头文件。(实际上 Vala 也可以写 C 语言库，毕竟这玩意最后还是会变成 C 语言来编译。)</p>
+        <p>所以说，Vala 的 SQLite 库用起来应该和 C 语言的差不多。不过请注意，Vala 是面向对象的，而 SQLite 的库在引用到 Vala 的时候，做了面向对象的处理。</p>
+        <p>使用前，引用这个库：</p>
+        <pre><code>using Sqlite;
 </code></pre>
-<h3>数据库类</h3>
-<p>如此定义一个数据库对象：</p>
-<pre><code>Sqlite.Database m_db;
+        <h3>数据库类</h3>
+        <p>如此定义一个数据库对象：</p>
+        <pre><code>Sqlite.Database m_db;
 </code></pre>
-<p>打开数据库：</p>
-<pre><code>Sqlite.Database.open_v2 (string path, out Sqlite.Database);
+        <p>打开数据库：</p>
+        <pre><code>Sqlite.Database.open_v2 (string path, out Sqlite.Database);
 </code></pre>
-<p>执行语句：</p>
-<pre><code>m_db.exec (string sql_exec);
+        <p>执行语句：</p>
+        <pre><code>m_db.exec (string sql_exec);
 </code></pre>
-<h3>数据库声明类</h3>
-<p>定义方式如下：</p>
-<pre><code>Sqlite.Statement add_flight;
+        <h3>数据库声明类</h3>
+        <p>定义方式如下：</p>
+        <pre><code>Sqlite.Statement add_flight;
 </code></pre>
-<p>准备声明：</p>
-<pre><code>public Sqlite.Statement prepare (string sql) throws DatabaseError {
+        <p>准备声明：</p>
+        <pre><code>public Sqlite.Statement prepare (string sql) throws DatabaseError {
     Sqlite.Statement statement;
     // 加不加 v2 都行，需要 sql 语句字符串，字符串长度，输出到一个 statement 类
     int sql_result = m_db.prepare_v2 (sql, sql.length, out statement);
@@ -356,9 +368,9 @@ private void open () throws DatabaseError {
     return statement;
 }
 </code></pre>
-<p>绑定声明：</p>
-<p>绑定依然有一系列的函数，此处只看绑定字符串</p>
-<pre><code>private void bind_text (Sqlite.Statement statement, string stmt, string text) throws DatabaseError {
+        <p>绑定声明：</p>
+        <p>绑定依然有一系列的函数，此处只看绑定字符串</p>
+        <pre><code>private void bind_text (Sqlite.Statement statement, string stmt, string text) throws DatabaseError {
     // 这是寻找 statement 中 stmt 的位置
     int index = statement.bind_parameter_index (stmt);
     if (index &lt;= 0) {
@@ -373,8 +385,8 @@ private void open () throws DatabaseError {
     }
 }
 </code></pre>
-<p>执行声明并清除绑定：</p>
-<pre><code>private void step (Sqlite.Statement statement) throws DatabaseError {
+        <p>执行声明并清除绑定：</p>
+        <pre><code>private void step (Sqlite.Statement statement) throws DatabaseError {
     // 执行声明
     int sql_return = statement.step ();
     // 清除绑定
@@ -385,8 +397,8 @@ private void open () throws DatabaseError {
     return;
 }
 </code></pre>
-<p>循环取出返回值：</p>
-<pre><code>// 摘抄自我的大作业代码
+        <p>循环取出返回值：</p>
+        <pre><code>// 摘抄自我的大作业代码
 public HashMap&lt;string, HashSet&lt;string&gt;&gt; ? avaliable () {
     try {
         var Graph = new HashMap&lt;string, HashSet&lt;string&gt;&gt; ();
@@ -408,48 +420,52 @@ public HashMap&lt;string, HashSet&lt;string&gt;&gt; ? avaliable () {
     }
 }
 </code></pre>
-<h2>如何速通一个编程语言</h2>
-<p>我当时是这么学的 C 语言：</p>
-<ol>
-<li>
-<p>基本输入输出</p>
-</li>
-<li>
-<p>判断语句</p>
-</li>
-<li>
-<p>循环语句</p>
-</li>
-<li>
-<p>函数</p>
-</li>
-<li>
-<p>数组</p>
-</li>
-<li>
-<p>结构体</p>
-</li>
-<li>
-<p>指针</p>
-</li>
-</ol>
-<p>前三条是说明这个语言大致的语法如何，因为编程思维的逻辑无非就那些：从哪里开始，需要那些材料，需要经过那些步骤，那些步骤得不断进行，这个步骤执行的条件是什么，这个步骤的结束条件是什么，最后的成果是如何的？逻辑搞明白了，接下来就是靠语言实现了。</p>
-<p>接下来第四条，我认为是说明这个语言的性质。C 语言是面向过程的语言，所以主要是函数。而要是面向对象的话，教完函数之后，就是教你如何写一个类，如何搞继承之类的了。</p>
-<p>剩下那三个，说明这个语言的数据结构。数据结构，有链表，栈，队列，字符串，树，图之类，还有集合，键值对字典这些常用的。这些东西给你了实现的工具，不过大多数语言已经实现了，比如 Java 。</p>
-<p>最后，速通了语言，不代表所有。你得找到相对应的库。要是库很缺乏，或者根本没学的话，很有可能你啥都干不了。我暑假两天速通了 Javascript，然后我由于没学任何 Javascript 的库，比如 vue / react 啥的，我都不知道要用这个来干嘛:-P</p>
-<p>最后，如有不完备或错误之处，敬请谅解。我还是水平不够啊:-(</p>
-<p>SuperBart 2022-12-20</p>
-</article>
+        <h2>如何速通一个编程语言</h2>
+        <p>我当时是这么学的 C 语言：</p>
+        <ol>
+            <li>
+                <p>基本输入输出</p>
+            </li>
+            <li>
+                <p>判断语句</p>
+            </li>
+            <li>
+                <p>循环语句</p>
+            </li>
+            <li>
+                <p>函数</p>
+            </li>
+            <li>
+                <p>数组</p>
+            </li>
+            <li>
+                <p>结构体</p>
+            </li>
+            <li>
+                <p>指针</p>
+            </li>
+        </ol>
+        <p>前三条是说明这个语言大致的语法如何，因为编程思维的逻辑无非就那些：从哪里开始，需要那些材料，需要经过那些步骤，那些步骤得不断进行，这个步骤执行的条件是什么，这个步骤的结束条件是什么，最后的成果是如何的？逻辑搞明白了，接下来就是靠语言实现了。
+        </p>
+        <p>接下来第四条，我认为是说明这个语言的性质。C 语言是面向过程的语言，所以主要是函数。而要是面向对象的话，教完函数之后，就是教你如何写一个类，如何搞继承之类的了。</p>
+        <p>剩下那三个，说明这个语言的数据结构。数据结构，有链表，栈，队列，字符串，树，图之类，还有集合，键值对字典这些常用的。这些东西给你了实现的工具，不过大多数语言已经实现了，比如 Java 。</p>
+        <p>最后，速通了语言，不代表所有。你得找到相对应的库。要是库很缺乏，或者根本没学的话，很有可能你啥都干不了。我暑假两天速通了 Javascript，然后我由于没学任何 Javascript 的库，比如 vue /
+            react 啥的，我都不知道要用这个来干嘛:-P</p>
+        <p>最后，如有不完备或错误之处，敬请谅解。我还是水平不够啊:-(</p>
+        <p>SuperBart 2022-12-20</p>
+    </article>
 
     <article>
-    <a href="../index.html">返回老版首页</a><br>
-    <a href="https://www.superbart.xyz">返回新版首页</a>
+        <a href="../index.html">返回老版首页</a><br>
+        <a href="https://www.superbart.top">返回新版首页</a>
     </article>
 
     <footer>
-    <p>
-        Copyright 2021-2022<a href="mailto:superbart_chen@qq.com">SuperBart</a><a href="https://icp.gov.moe/?keyword=20220626" target="_blank">萌ICP备20220626号</a><br>本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a>进行许可。
-    </p>
+        <p>
+            Copyright 2021-2024<a href="mailto:superbart_chen@qq.com">SuperBart</a><a
+                href="https://icp.gov.moe/?keyword=20220626" target="_blank">萌ICP备20220626号</a><br>本作品采用<a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a>进行许可。
+        </p>
     </footer>
 </body>
 
