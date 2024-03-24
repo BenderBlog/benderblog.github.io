@@ -4,11 +4,15 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title>XDU Planet 感想 </title>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.4.0/build/styles/rainbow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="../default.css">
     <script>
         document.createElement('article');
         document.createElement('footer');
+        hljs.highlightAll();
     </script>
-    <link rel="stylesheet" href="../default.css">
 </head>
 
 <body>
@@ -55,9 +59,7 @@
         <p>显然这么简单一改是无法完全我的需求的，API 面向的客户端可不是老年机。为了最后的 Eye candy，我对最核心的数据结构进行了修改。你们可以查看我的 xdurepo.php
             文件，我把这个人的图标，名称，地址都传了过去。而最终为了输出 json 更好被客户端解码，我在每个返回值外面都套上了 stdClass。</p>
         <p>基本上 API 就算这样了，我这里写出来。</p>
-        <pre><code>
-        GET /xduplanet.php
-
+        <pre><code>GET /xduplanet.php
         {
           "repos": {
             "benderblog": {         // key: 该对象名称，后面查询使用
@@ -68,10 +70,10 @@
             },
           }
         }
-        </code></pre>
-        <pre><code>
-        GET /xduplanet.php?feed=key
-        其中 key 是上述提到的后面查询使用的 key
+    </code></pre>
+
+        <pre><code>GET /xduplanet.php?feed=key
+其中 key 是上述提到的后面查询使用的 key
         
         {
           // 文章列表，下面分别对应标题，发布时间和来源链接
@@ -85,9 +87,9 @@
           // lastUpdateDate：本数据的获取时间，为将来备
           "lastUpdateTime": 1689432413用
         }
-        </code></pre>
-        <pre><code>
-        GET /xduplanet.php?feed=key&p=0
+    </code></pre>
+
+        <pre><code>GET /xduplanet.php?feed=key&p=0
         其中 key 是上述提到的后面查询使用的 key，p 指上面文章列表中第几个文章
         
         // 文章标题，来源链接，发布时间，内容
@@ -98,7 +100,8 @@
           "time": 1682726400,
           "content": "Omit here."
         }
-        </code></pre>
+    </code></pre>
+
         <p>我在 Traintime PDA 里面的相关分页也写了相关页面，还明白了 PageView 如何保存状态，每天一个编程小常识这就是？</p>
         <h2>后面的胡说阶段</h2>
         <p>我把这个服务挂在了我的服务器上，还上新了一些外网著名媒体。没敢上那些明显危险的，我感觉这些媒体都算是比较中立的吧:-P</p>
