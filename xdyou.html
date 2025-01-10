@@ -4,11 +4,14 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <title>XDYou / Traintime PDA 介绍页面</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
         document.createElement('article');
         document.createElement('footer');
+        document.getElementById("md-view").innerHTML = marked(content);
     </script>
     <link rel="stylesheet" href="default.css">
+    
 </head>
 
 <body>
@@ -67,9 +70,9 @@
     </article>
 
     <article>
-以下贡献者名单，请各位自行猜他们在现实中是谁。
+<div id="md-view">以下贡献者名单，请各位自行猜他们在现实中是谁。
 
-1. BenderBlog Rodriguez
+1.BenderBlog Rodriguez
 
 主要开发者。
 
@@ -251,6 +254,7 @@ too mysterous to tell here
 修复问题，研究生版本赞助
 
 “我要用博得之门3男同创死各位”
+</div>
     </article>
     
     <footer>
