@@ -8,7 +8,80 @@
     <script>
         document.createElement('article');
         document.createElement('footer');
-        document.getElementById("md-view").innerHTML = marked.marked('以下贡献者名单，请各位自行猜他们在现实中是谁。'+
+    </script>
+    <link rel="stylesheet" href="default.css">
+    
+</head>
+
+<body>
+
+    <article id="main">
+        <h1>XDYou / Traintime PDA 介绍页面</h1>
+        
+        <p>Traintime PDA，iOS 平台称 XDYou，是为西电学生设计的开源信息查询软件。</p>
+        
+        <p>最新稳定版：v1.4.1+25</p>
+        
+        <p id="function">特性概览：
+        <ol>
+            <li>支持本科生和研究生查看课表，成绩，考试信息。</li>
+            <li>查看日程表：包括课程信息，考试信息。顺便把你偶像的图片设成背景。(以及导入你对象的课表，写完真虐心啊)</li>
+            <li>查看体育信息：体育课程信息和体测成绩记录。(打卡机在人世间完成了一个轮回)</li>
+            <li>查看宿舍电量，也许顺手交了电费。（研究生需要自行输入电费账号）</li>
+            <li>查看成绩，包括可以自行选择科目计算均分。(本程序首创，研究生不可用均分计算)</li>
+            <li>考试安排查询。</li>
+            <li>查询空闲教室。（研究生不可用）</li>
+            <li>图书馆信息查询，个人借书状况和学校书库状况。</li>
+            <li>校园卡流水查询，也就是在学校食堂的流水啦。</li>
+            <li>其他小功能：请假，报修之类。</li>
+            <li>XDU Planet：查看同学的博客。</li>
+            <li>物理实验查看功能。</li>
+            <li>Android 和 iOS 特有的日程查看桌面小部件。</li>
+        </ol>
+        <p id="function">另外，本程序
+        <ol>
+            <li>代码完全开源，没有任何遥测和埋点。本程序使用上只是模拟浏览器浏览网页，并将数据经过了很轻，很透明的处理。</li>
+            <li>使用广受赞誉的 Flutter 架构，跨平台而且性能高。目前本程序能支持 Android，iOS 平台，同时有社区构建的 Windows，Linux 平台。</li>
+            <li>受益于 Flutter 跨平台，本程序专门为平板和桌面设计适配了Master-Detail View，使其在平板和桌面使用更自然。如果你是桌面用户，你不用专门去一站式看成绩了。</li>
+            <li>开发者很不正经，而且相信群众的力量。本程序融合了除开发者之外到了十余人的想法和功能。</li>
+        </ol>
+        </p>
+        <p>另查看<a href="writing/Traintime PDA Ultimate Review.html">Traintime PDA 终极回顾</a></p>。
+        
+        <p>软件下载</p>
+        <ul id="software">
+            <li><a href="https://mirrors.tuna.tsinghua.edu.cn/fdroid/repo/io.github.benderblog.traintime_pda_253.apk">安卓版本下载（提供商：F-Droid 清华镜像站）</a></li>
+            <li><a href="https://github.com/BenderBlog/traintime_pda/releases">安卓和桌面版本下载（提供商：Github Release）</a></li>
+            <li><a href="https://apps.apple.com/us/app/xdyou/id6461723688?l=zh-Hans-CN">苹果版本唯一官方版本下载（提供商：App Store）</a></li>
+        </ul>
+        
+        <p>代码相关</p>
+        <ul id="repo">
+            <li><a href="https://github.com/BenderBlog/watermeter">Github 仓库</a></li>
+            <li><a href="https://linux.xidian.edu.cn/git/SuperBart/watermeter">校内 Git 镜像</a></li>
+            <li><a href="xdyou_eula.html">XDYou 软件授权协议</a></li>
+        </ul>
+    </article>
+
+    <article>
+        <a href="index.html">返回老版首页</a><br>
+        <a href="https://www.superbart.top">返回新版首页</a>
+    </article>
+
+    <article>
+<div id="md-view">
+</div>
+    </article>
+    
+    <footer>
+        <p>
+            Copyright 2021-2024<a href="mailto:superbart_chen@qq.com">SuperBart</a><a
+                href="https://icp.gov.moe/?keyword=20220626" target="_blank">萌ICP备20220626号</a>
+        </p>
+    </footer>
+</body>
+<script>
+            document.getElementById("md-view").innerHTML = marked.marked('以下贡献者名单，请各位自行猜他们在现实中是谁。'+
 
 '1.BenderBlog Rodriguez  '+
 '主要开发者  '+
@@ -131,77 +204,7 @@
 '28. ZCWzy  '+
 '修复问题，研究生版本赞助  '+
 '“我要用博得之门3男同创死各位”');
-    </script>
-    <link rel="stylesheet" href="default.css">
-    
-</head>
 
-<body>
-
-    <article id="main">
-        <h1>XDYou / Traintime PDA 介绍页面</h1>
-        
-        <p>Traintime PDA，iOS 平台称 XDYou，是为西电学生设计的开源信息查询软件。</p>
-        
-        <p>最新稳定版：v1.4.1+25</p>
-        
-        <p id="function">特性概览：
-        <ol>
-            <li>支持本科生和研究生查看课表，成绩，考试信息。</li>
-            <li>查看日程表：包括课程信息，考试信息。顺便把你偶像的图片设成背景。(以及导入你对象的课表，写完真虐心啊)</li>
-            <li>查看体育信息：体育课程信息和体测成绩记录。(打卡机在人世间完成了一个轮回)</li>
-            <li>查看宿舍电量，也许顺手交了电费。（研究生需要自行输入电费账号）</li>
-            <li>查看成绩，包括可以自行选择科目计算均分。(本程序首创，研究生不可用均分计算)</li>
-            <li>考试安排查询。</li>
-            <li>查询空闲教室。（研究生不可用）</li>
-            <li>图书馆信息查询，个人借书状况和学校书库状况。</li>
-            <li>校园卡流水查询，也就是在学校食堂的流水啦。</li>
-            <li>其他小功能：请假，报修之类。</li>
-            <li>XDU Planet：查看同学的博客。</li>
-            <li>物理实验查看功能。</li>
-            <li>Android 和 iOS 特有的日程查看桌面小部件。</li>
-        </ol>
-        <p id="function">另外，本程序
-        <ol>
-            <li>代码完全开源，没有任何遥测和埋点。本程序使用上只是模拟浏览器浏览网页，并将数据经过了很轻，很透明的处理。</li>
-            <li>使用广受赞誉的 Flutter 架构，跨平台而且性能高。目前本程序能支持 Android，iOS 平台，同时有社区构建的 Windows，Linux 平台。</li>
-            <li>受益于 Flutter 跨平台，本程序专门为平板和桌面设计适配了Master-Detail View，使其在平板和桌面使用更自然。如果你是桌面用户，你不用专门去一站式看成绩了。</li>
-            <li>开发者很不正经，而且相信群众的力量。本程序融合了除开发者之外到了十余人的想法和功能。</li>
-        </ol>
-        </p>
-        <p>另查看<a href="writing/Traintime PDA Ultimate Review.html">Traintime PDA 终极回顾</a></p>。
-        
-        <p>软件下载</p>
-        <ul id="software">
-            <li><a href="https://mirrors.tuna.tsinghua.edu.cn/fdroid/repo/io.github.benderblog.traintime_pda_253.apk">安卓版本下载（提供商：F-Droid 清华镜像站）</a></li>
-            <li><a href="https://github.com/BenderBlog/traintime_pda/releases">安卓和桌面版本下载（提供商：Github Release）</a></li>
-            <li><a href="https://apps.apple.com/us/app/xdyou/id6461723688?l=zh-Hans-CN">苹果版本唯一官方版本下载（提供商：App Store）</a></li>
-        </ul>
-        
-        <p>代码相关</p>
-        <ul id="repo">
-            <li><a href="https://github.com/BenderBlog/watermeter">Github 仓库</a></li>
-            <li><a href="https://linux.xidian.edu.cn/git/SuperBart/watermeter">校内 Git 镜像</a></li>
-            <li><a href="xdyou_eula.html">XDYou 软件授权协议</a></li>
-        </ul>
-    </article>
-
-    <article>
-        <a href="index.html">返回老版首页</a><br>
-        <a href="https://www.superbart.top">返回新版首页</a>
-    </article>
-
-    <article>
-<div id="md-view">
-</div>
-    </article>
-    
-    <footer>
-        <p>
-            Copyright 2021-2024<a href="mailto:superbart_chen@qq.com">SuperBart</a><a
-                href="https://icp.gov.moe/?keyword=20220626" target="_blank">萌ICP备20220626号</a>
-        </p>
-    </footer>
-</body>
+</script>
 
 </html>
