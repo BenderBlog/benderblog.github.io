@@ -8,7 +8,8 @@
     <script>
         document.createElement('article');
         document.createElement('footer');
-        document.getElementById("md-view").innerHTML = marked.marked(document.getElementById("md-view").innerHTML);
+        var data = document.getElementById("md-view").innerHTML;
+        document.getElementById("md-view").innerHTML = marked.marked(data);
     </script>
     <link rel="stylesheet" href="default.css">
     
